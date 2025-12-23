@@ -10,184 +10,101 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{
-  background:#0b0f1a;
-  font-family:'Orbitron',sans-serif;
-  color:#e5e7eb;
-}
-.panel{
-  max-width:1200px;
-  margin:40px auto;
-  background:linear-gradient(145deg,#1e293b,#020617);
-  border:3px solid #22c55e;
-  border-radius:18px;
-  padding:25px;
-  box-shadow:0 0 50px rgba(34,197,94,.35);
-  position:relative;
-  overflow:hidden;
-}
-.watermark{
-  position:absolute;
-  bottom:15px;
-  right:20px;
-  font-size:30px;
-  color:rgba(255,255,255,0.12);
-  pointer-events:none;
-}
-.scan-line{
-  position:absolute;
-  top:-10%;
-  left:0;
-  width:100%;
-  height:3px;
-  background:linear-gradient(90deg,transparent,#22c55e,transparent);
-  box-shadow:0 0 20px #22c55e;
-  animation:scan 1.8s linear infinite;
-  display:none;
-}
+body{background:#0b0f1a;font-family:'Orbitron',sans-serif;color:#e5e7eb}
+.panel{max-width:1200px;margin:40px auto;background:linear-gradient(145deg,#1e293b,#020617);
+border:3px solid #22c55e;border-radius:18px;padding:25px;box-shadow:0 0 50px rgba(34,197,94,.35);position:relative}
+.watermark{position:absolute;bottom:15px;right:20px;font-size:30px;color:rgba(255,255,255,0.12)}
+.scan-line{position:absolute;top:-10%;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent,#22c55e,transparent);
+animation:scan 1.8s linear infinite;display:none}
 @keyframes scan{to{top:110%}}
-.header{
-  text-align:center;
-  font-size:30px;
-  color:#22c55e;
-  margin-bottom:25px;
-}
-.header small{
-  display:block;
-  font-size:18px;
-  color:#9ca3af;
-}
-.search{
-  display:flex;
-  gap:10px;
-  margin-bottom:25px;
-}
-input{
-  flex:1;
-  padding:14px;
-  border-radius:10px;
-  border:none;
-  outline:none;
-}
-button{
-  padding:14px 26px;
-  background:#22c55e;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:600;
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
-}
-.box{
-  background:#020617;
-  border:2px solid #22c55e;
-  border-radius:12px;
-  padding:15px;
-}
+.header{text-align:center;font-size:30px;color:#22c55e;margin-bottom:25px}
+.header small{display:block;font-size:18px;color:#9ca3af}
+.search{display:flex;gap:10px;margin-bottom:25px}
+input{flex:1;padding:14px;border-radius:10px;border:none}
+button{padding:14px 26px;background:#22c55e;border:none;border-radius:10px;cursor:pointer;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.box{background:#020617;border:2px solid #22c55e;border-radius:12px;padding:15px}
 .label{font-size:12px;color:#9ca3af}
 .value{margin-top:6px;font-weight:600}
-.safe{color:#22c55e}
-.warn{color:#facc15}
-.danger{color:#ef4444}
-#map{
-  margin-top:25px;
-  height:300px;
-  border-radius:14px;
-  border:2px solid #22c55e;
-}
-.footer{
-  margin-top:25px;
-  text-align:center;
-  font-size:17px;
-  color:#64748b;
-}
+.safe{color:#22c55e}.warn{color:#facc15}.danger{color:#ef4444}
+#map{margin-top:25px;height:300px;border-radius:14px;border:2px solid #22c55e}
+.footer{text-align:center;margin-top:25px;color:#64748b}
 </style>
 </head>
+
 <body>
-
 <div class="panel">
-  <div class="scan-line" id="scanLine"></div>
+<div class="scan-line" id="scanLine"></div>
 
-  <div class="header">
-    🛡 JFX_CYBER
-    <small>Advanced IP • VPN • Proxy Intelligence System</small>
-  </div>
+<div class="header">🛡 JFX_CYBER
+<small>Advanced IP • VPN • Proxy Intelligence System</small></div>
 
-  <div class="search">
-    <input id="ipInput" placeholder="Masukkan IP target (contoh: 8.8.8.8)">
-    <button onclick="scanIP()">SCAN</button>
-  </div>
+<div class="search">
+<input id="ipInput" placeholder="Masukkan IP target (contoh: 8.8.8.8)">
+<button onclick="scanIP()">SCAN</button>
+</div>
 
-  <div class="grid">
-    <div class="box"><div class="label">IP Address</div><div class="value" id="ip">-</div></div>
-    <div class="box"><div class="label">Country</div><div class="value" id="country">-</div></div>
-    <div class="box"><div class="label">City</div><div class="value" id="city">-</div></div>
-    <div class="box"><div class="label">ISP</div><div class="value" id="isp">-</div></div>
-    <div class="box"><div class="label">ASN</div><div class="value" id="asn">-</div></div>
-    <div class="box"><div class="label">VPN / Proxy Status</div><div class="value" id="vpnStatus">-</div></div>
-    <div class="box"><div class="label">Confidence Level</div><div class="value" id="confidence">-</div></div>
-  </div>
+<div class="grid">
+<div class="box"><div class="label">IP Address</div><div class="value" id="ip">-</div></div>
+<div class="box"><div class="label">Country</div><div class="value" id="country">-</div></div>
+<div class="box"><div class="label">City</div><div class="value" id="city">-</div></div>
+<div class="box"><div class="label">ISP</div><div class="value" id="isp">-</div></div>
+<div class="box"><div class="label">ASN</div><div class="value" id="asn">-</div></div>
+<div class="box"><div class="label">VPN / Proxy Status</div><div class="value" id="vpnStatus">-</div></div>
+<div class="box"><div class="label">Confidence Level</div><div class="value" id="confidence">-</div></div>
+</div>
 
-  <div id="map"></div>
-
-  <div class="footer">© 2025 JFX_CYBER • Secure Cyber Intelligence</div>
-  <div class="watermark">محمد يوسف أكبر</div>
+<div id="map"></div>
+<div class="footer">© 2025 JFX_CYBER • Secure Cyber Intelligence</div>
+<div class="watermark">محمد يوسف أكبر</div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-let map = L.map('map').setView([0,0],2);
+let map=L.map('map').setView([0,0],2);
 let marker;
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
 async function scanIP(){
-  const targetIP = ipInput.value.trim();
-  if(!targetIP) return alert("Masukkan IP!");
+const targetIP=ipInput.value.trim();
+if(!targetIP) return alert("Masukkan IP!");
+scanLine.style.display="block";
+let score=0,a={},b={};
 
-  scanLine.style.display="block";
-  let score = 0;
+document.getElementById("ip").innerText=targetIP;
 
-  try{
-    const a = await fetch(`https://ipapi.co/${targetIP}/json/`).then(r=>r.json());
+try{
+  a=await fetch(`https://ipapi.co/${targetIP}/json/`).then(r=>r.json());
+}catch(e){console.warn("ipapi gagal");}
 
-    document.getElementById("ip").innerText = targetIP;
-    country.innerText = a.country_name || "-";
-    city.innerText = a.city || "-";
-    isp.innerText = a.org || "-";
-    asn.innerText = a.asn || "-";
+try{
+  b=await fetch(`https://ipwho.is/${targetIP}`).then(r=>r.json());
+}catch(e){console.warn("ipwho gagal");}
 
-    if(/cloud|hosting|data|vpn|server/i.test(a.org||"")) score++;
+country.innerText=a.country_name||b.country||"-";
+city.innerText=a.city||b.city||"-";
+isp.innerText=a.org||b.isp||"-";
+asn.innerText=a.asn||b.asn||"-";
 
-    if(a.latitude && a.longitude){
-      map.setView([a.latitude,a.longitude],10);
-      marker ? marker.setLatLng([a.latitude,a.longitude]) :
-      marker = L.marker([a.latitude,a.longitude]).addTo(map);
-    }
+if(/cloud|hosting|data|vpn|server/i.test((a.org||b.isp||""))) score++;
+if(b.proxy||b.vpn||b.hosting) score++;
 
-    const b = await fetch(`https://ipwho.is/${targetIP}`).then(r=>r.json());
-    if(b.proxy || b.vpn || b.hosting) score++;
+let lat=a.latitude||b.latitude;
+let lon=a.longitude||b.longitude;
+if(lat&&lon){
+  map.setView([lat,lon],10);
+  marker?marker.setLatLng([lat,lon]):marker=L.marker([lat,lon]).addTo(map);
+}
 
-    if((a.asn||"").toLowerCase().includes("as")) score++;
+let status="NORMAL",cls="safe",conf="LOW";
+if(score===2){status="SUSPICIOUS";cls="warn";conf="MEDIUM";}
+if(score>=3){status="VPN / PROXY DETECTED";cls="danger";conf="HIGH";}
 
-    let status="NORMAL", cls="safe", conf="LOW";
-    if(score===2){status="SUSPICIOUS";cls="warn";conf="MEDIUM";}
-    if(score>=3){status="VPN / PROXY DETECTED";cls="danger";conf="HIGH";}
+vpnStatus.innerHTML=`<span class="${cls}">${status}</span>`;
+confidence.innerHTML=`<span class="${cls}">${conf}</span>`;
 
-    vpnStatus.innerHTML=`<span class="${cls}">${status}</span>`;
-    confidence.innerHTML=`<span class="${cls}">${conf}</span>`;
-
-  }catch(e){
-    alert("Gagal scan IP");
-    console.error(e);
-  }
-
-  scanLine.style.display="none";
+scanLine.style.display="none";
 }
 </script>
-
 </body>
 </html>
